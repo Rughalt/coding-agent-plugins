@@ -6,6 +6,8 @@ A comprehensive collection of specialized agents for thorough pull request revie
 
 This plugin bundles 6 expert review agents that each focus on a specific aspect of code quality. Use them individually for targeted reviews or together for comprehensive PR analysis.
 
+`review-pr` runs one review pass. `review-pr-loop` runs five agents sequentially, fixes verified CRITICAL/HIGH/MEDIUM findings, and repeats on the updated change for up to three rounds. It includes committed, staged, unstaged, and relevant untracked changes in its scope; it does not push or comment on a PR. The existing `stack-pr` workflow uses its own per-issue review loop when building a stack of PRs.
+
 ## Agents
 
 ### 1. comment-analyzer

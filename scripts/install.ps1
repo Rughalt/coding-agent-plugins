@@ -118,7 +118,7 @@ function Split-Agent([string]$File) {
     for ($i = 0; $i -lt $lines.Count; $i++) {
         if ($lines[$i] -eq "---") { $dashes++; if ($dashes -eq 2) { $fmEnd = $i; break } }
     }
-    if ($fmEnd -lt 0) { throw "$File: missing YAML frontmatter" }
+    if ($fmEnd -lt 0) { throw "${File}: missing YAML frontmatter" }
 
     $name = [IO.Path]::GetFileNameWithoutExtension($File)
     $desc = New-Object System.Text.StringBuilder
