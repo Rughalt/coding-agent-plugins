@@ -1,0 +1,22 @@
+{
+  "name": "coding-agent-plugins",
+  "owner": {
+    "name": "Rughalt"
+  },
+  "metadata": {
+    "description": "Reusable cross-tool agent plugins for Devin, zcode, Claude Code, Cursor, OpenCode, Codex, Vibe, and Windsurf",
+    "version": "1.0.0"
+  },
+  "plugins": [
+    {
+      "name": "pr-review-toolkit",
+      "source": "./plugins/pr-review-toolkit",
+      "description": "Comprehensive PR review agents specializing in comments, tests, error handling, type design, code quality, and code simplification"
+    },
+    {
+      "name": "stacked-prs",
+      "source": "./plugins/stacked-prs",
+      "description": "Stacked-PR workflow: plan a list of issues as dependent PRs, implement and review each sequentially, monitor CI, file deferred findings as follow-ups"
+    }
+  ]
+}

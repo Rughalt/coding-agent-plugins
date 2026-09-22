@@ -1,0 +1,12 @@
+{
+  "name": "pr-review-toolkit",
+  "displayName": "PR Review Toolkit",
+  "version": "1.0.0",
+  "description": "Comprehensive PR review agents specializing in comments, tests, error handling, type design, code quality, and code simplification.",
+  "author": {
+    "name": "Anthropic (repackaged by Rughalt)"
+  },
+  "license": "MIT",
+  "keywords": ["code-review", "pr-review", "agents"],
+  "logo": "icon.png"
+}

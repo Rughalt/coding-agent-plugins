@@ -14,7 +14,8 @@
       },
       "source": "./plugins/pr-review-toolkit",
       "category": "productivity",
-      "version": "1.0.0"
+      "version": "1.0.0",
+      "icon": "https://raw.githubusercontent.com/Rughalt/coding-agent-plugins/main/plugins/pr-review-toolkit/icon.png"
     },
     {
       "name": "stacked-prs",
@@ -24,7 +25,8 @@
       },
       "source": "./plugins/stacked-prs",
       "category": "productivity",
-      "version": "1.0.0"
+      "version": "1.0.0",
+      "icon": "https://raw.githubusercontent.com/Rughalt/coding-agent-plugins/main/plugins/stacked-prs/icon.png"
     }
   ]
 }

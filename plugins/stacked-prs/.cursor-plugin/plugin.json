@@ -1,0 +1,12 @@
+{
+  "name": "stacked-prs",
+  "displayName": "Stacked PRs",
+  "version": "1.0.0",
+  "description": "Work a list of issues as a stack of dependent PRs: plan the stack, implement each issue, run sequential reviews until clean, open each PR, monitor CI, and file deferred findings as follow-up tickets.",
+  "author": {
+    "name": "Rughalt"
+  },
+  "license": "MIT",
+  "keywords": ["stacked-prs", "workflow", "issues"],
+  "logo": "icon.png"
+}
