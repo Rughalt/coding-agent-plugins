@@ -40,9 +40,15 @@ These tools don't load git plugins — copy the agents and the `review-pr`
 skill into their user-level directories instead:
 
 ```bash
-python3 scripts/install.py                    # all tools
-python3 scripts/install.py --tools cursor codex   # pick a subset
-python3 scripts/install.py --dry-run          # preview
+# Linux / macOS / WSL
+./scripts/install.sh                          # all tools
+./scripts/install.sh --tools cursor codex     # pick a subset
+./scripts/install.sh --dry-run                # preview
+
+# Windows (PowerShell)
+.\scripts\install.ps1
+.\scripts\install.ps1 -Tools cursor, codex
+.\scripts\install.ps1 -DryRun
 ```
 
 **Agents:**
@@ -81,5 +87,7 @@ unless you explicitly ask for parallel (e.g. `review-pr all parallel`).
 │   ├── agents/                       # 6 review agents (canonical)
 │   ├── commands/review-pr.md         # Claude/zcode slash command
 │   └── skills/review-pr/SKILL.md     # Devin slash command
-└── scripts/install.py                # per-tool installer for non-plugin tools
+└── scripts/
+    ├── install.sh                  # per-tool installer (Linux/macOS/WSL)
+    └── install.ps1                 # per-tool installer (Windows)
 ```
