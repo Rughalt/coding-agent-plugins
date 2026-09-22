@@ -57,6 +57,25 @@ their user-level directories instead:
 .\scripts\install.ps1 -DryRun
 ```
 
+**Project scope (cloud agents):** Cursor/Codex cloud agents and teammates'
+checkouts have no access to your user-level dirs — they read what the repo
+commits. `--project` writes the same content into project-scoped dirs
+(`.cursor/agents/`, `.codex/agents/`, `.opencode/agents/`, `.devin/`,
+`.agents/skills/`, `.windsurf/skills/`, `.vibe/`, `.claude/`) inside a
+checkout so you can commit them:
+
+```bash
+./scripts/install.sh --project /path/to/repo
+# or a subset: --project /path/to/repo --tools cursor codex
+```
+
+Commit the generated directories. For Devin cloud sessions you can instead
+require the real plugin in the repo's `.devin/config.json`:
+
+```json
+{ "requiredPlugins": ["Rughalt/coding-agent-plugins#plugins/pr-review-toolkit"] }
+```
+
 **Agents:**
 
 | Target | Directory | Format |

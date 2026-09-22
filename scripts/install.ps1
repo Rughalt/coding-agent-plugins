@@ -23,11 +23,17 @@
 #   .\scripts\install.ps1 -Tools cursor, codex     # pick a subset
 #   .\scripts\install.ps1 -Plugin <name>           # default: pr-review-toolkit
 #   .\scripts\install.ps1 -DryRun                  # preview
+#   .\scripts\install.ps1 -Project <dir>           # write project-scoped dirs
+#                                                  # (.cursor\, .agents\, ...) into
+#                                                  # a repo checkout to commit —
+#                                                  # this is how cloud agents
+#                                                  # (Cursor, Codex) get them
 
 [CmdletBinding()]
 param(
     [string]$Plugin = "pr-review-toolkit",
     [string[]]$Tools = @(),
+    [string]$Project = "",
     [switch]$DryRun
 )
 
@@ -55,6 +61,32 @@ $SkillTargets = @{
     codex    = "$HOME\.agents\skills"
     windsurf = "$HOME\.codeium\windsurf\skills"
     vibe     = "$HOME\.vibe\skills"
+}
+
+# -Project <dir>: same fan-out rooted at committed project dirs instead
+# of the user profile. devin gets .devin\skills here (repo-committed
+# skills are an alternative to installing the plugin); opencode stays on
+# the shared .agents\skills compat path it already reads.
+if ($Project) {
+    if (-not (Test-Path $Project)) { throw "error: project dir '$Project' not found" }
+    $AgentTargets = @{
+        claude   = "$Project\.claude\agents"
+        cursor   = "$Project\.cursor\agents"
+        devin    = "$Project\.devin\agents"
+        agents   = "$Project\.agents\agents"
+        opencode = "$Project\.opencode\agents"
+        codex    = "$Project\.codex\agents"
+        vibe     = "$Project\.vibe"
+    }
+    $SkillTargets = @{
+        claude   = "$Project\.claude\skills"
+        cursor   = "$Project\.cursor\skills"
+        devin    = "$Project\.devin\skills"
+        agents   = "$Project\.agents\skills"
+        codex    = "$Project\.agents\skills"
+        windsurf = "$Project\.windsurf\skills"
+        vibe     = "$Project\.vibe\skills"
+    }
 }
 
 if (-not $Tools) {

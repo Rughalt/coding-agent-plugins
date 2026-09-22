@@ -24,25 +24,36 @@
 #   ./scripts/install.sh --tools cursor codex  # pick a subset
 #   ./scripts/install.sh --plugin <name>       # default: pr-review-toolkit
 #   ./scripts/install.sh --dry-run             # preview
+#   ./scripts/install.sh --project <dir>       # write project-scoped dirs
+#                                              # (.cursor/, .agents/, ...) into
+#                                              # a repo checkout to commit —
+#                                              # this is how cloud agents
+#                                              # (Cursor, Codex) get them
 
 set -euo pipefail
 
 REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 PLUGIN="pr-review-toolkit"
 DRY_RUN=0
+PROJECT=""
 TOOLS=()
 
-usage() { sed -n '2,32p' "$0" | sed 's/^# \{0,1\}//'; }
+usage() { sed -n '2,38p' "$0" | sed 's/^# \{0,1\}//'; }
 
 while [[ $# -gt 0 ]]; do
     case "$1" in
         --plugin) PLUGIN="$2"; shift 2 ;;
         --tools) shift; while [[ $# -gt 0 && "$1" != --* ]]; do TOOLS+=("$1"); shift; done ;;
+        --project) PROJECT="$2"; shift 2 ;;
         --dry-run) DRY_RUN=1; shift ;;
         -h|--help) usage; exit 0 ;;
         *) echo "unknown arg: $1" >&2; usage; exit 1 ;;
     esac
 done
+
+if [[ -n $PROJECT ]]; then
+    [[ -d $PROJECT ]] || { echo "error: project dir '$PROJECT' not found" >&2; exit 1; }
+fi
 
 # tool -> agents destination (vibe is the parent dir; gets agents/ + prompts/)
 declare -A AGENT_TARGETS=(
@@ -69,6 +80,31 @@ declare -A SKILL_TARGETS=(
     [windsurf]="$HOME/.codeium/windsurf/skills"
     [vibe]="$HOME/.vibe/skills"
 )
+
+# --project <dir>: same fan-out rooted at committed project dirs instead
+# of the user home. devin gets .devin/skills here (repo-committed skills
+# are an alternative to installing the plugin); opencode stays on the
+# shared .agents/skills compat path it already reads.
+if [[ -n $PROJECT ]]; then
+    AGENT_TARGETS=(
+        [claude]="$PROJECT/.claude/agents"
+        [cursor]="$PROJECT/.cursor/agents"
+        [devin]="$PROJECT/.devin/agents"
+        [agents]="$PROJECT/.agents/agents"
+        [opencode]="$PROJECT/.opencode/agents"
+        [codex]="$PROJECT/.codex/agents"
+        [vibe]="$PROJECT/.vibe"
+    )
+    SKILL_TARGETS=(
+        [claude]="$PROJECT/.claude/skills"
+        [cursor]="$PROJECT/.cursor/skills"
+        [devin]="$PROJECT/.devin/skills"
+        [agents]="$PROJECT/.agents/skills"
+        [codex]="$PROJECT/.agents/skills"
+        [windsurf]="$PROJECT/.windsurf/skills"
+        [vibe]="$PROJECT/.vibe/skills"
+    )
+fi
 
 if [[ ${#TOOLS[@]} -eq 0 ]]; then
     mapfile -t TOOLS < <(printf '%s\n' "${!AGENT_TARGETS[@]}" "${!SKILL_TARGETS[@]}" | sort -u)
