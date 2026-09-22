@@ -68,7 +68,7 @@ foreach ($t in $Tools) {
 
 $AgentsDir = Join-Path $RepoRoot "plugins\$Plugin\agents"
 $SkillsDir = Join-Path $RepoRoot "plugins\$Plugin\skills"
-if (-not (Test-Path $AgentsDir)) { throw "error: $AgentsDir not found" }
+if (-not (Test-Path $AgentsDir) -and -not (Test-Path $SkillsDir)) { throw "error: plugin '$Plugin' has no agents/ or skills/ dir" }
 
 function Write-Out([string]$Path, [string]$Tool, [string]$Content) {
     if ($DryRun) {
@@ -124,6 +124,7 @@ function Render-VibeToml($a) {
     return "agent_type = `"subagent`"`ndisplay_name = `"$($a.Name)`"`ndescription = `"$desc`"`nsystem_prompt_id = `"$($a.Name)`"`n"
 }
 
+if (Test-Path $AgentsDir) {
 Get-ChildItem "$AgentsDir\*.md" | ForEach-Object {
     $a = Split-Agent $_.FullName
     foreach ($tool in $Tools) {
@@ -139,6 +140,7 @@ Get-ChildItem "$AgentsDir\*.md" | ForEach-Object {
             }
         }
     }
+}
 }
 
 if (Test-Path $SkillsDir) {

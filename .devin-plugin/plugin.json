@@ -10,6 +10,11 @@
       "source": "git-subdir",
       "url": "https://github.com/Rughalt/coding-agent-plugins",
       "path": "plugins/pr-review-toolkit"
+    },
+    {
+      "source": "git-subdir",
+      "url": "https://github.com/Rughalt/coding-agent-plugins",
+      "path": "plugins/stacked-prs"
     }
   ]
 }

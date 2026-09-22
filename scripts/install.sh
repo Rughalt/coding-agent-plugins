@@ -81,7 +81,7 @@ done
 
 AGENTS_DIR="$REPO_ROOT/plugins/$PLUGIN/agents"
 SKILLS_DIR="$REPO_ROOT/plugins/$PLUGIN/skills"
-[[ -d $AGENTS_DIR ]] || { echo "error: $AGENTS_DIR not found" >&2; exit 1; }
+[[ -d $AGENTS_DIR || -d $SKILLS_DIR ]] || { echo "error: plugin '$PLUGIN' has no agents/ or skills/ dir" >&2; exit 1; }
 
 write() { # write <file> <tool> ; content on stdin
     local out="$1" tool="$2"
@@ -136,6 +136,7 @@ render_vibe_toml() {
     printf 'system_prompt_id = "%s"\n' "$name"
 }
 
+if [[ -d $AGENTS_DIR ]]; then
 for f in "$AGENTS_DIR"/*.md; do
     [[ -e $f ]] || break
     name="$(agent_name "$f")"
@@ -153,6 +154,7 @@ for f in "$AGENTS_DIR"/*.md; do
         esac
     done
 done
+fi
 
 if [[ -d $SKILLS_DIR ]]; then
     declare -A seen=()
