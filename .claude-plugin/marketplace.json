@@ -1,0 +1,20 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "coding-agent-plugins",
+  "description": "Reusable cross-tool agent plugins for Devin, zcode, Claude Code, Cursor, OpenCode, and Codex",
+  "owner": {
+    "name": "Rughalt"
+  },
+  "plugins": [
+    {
+      "name": "pr-review-toolkit",
+      "description": "Comprehensive PR review agents specializing in comments, tests, error handling, type design, code quality, and code simplification",
+      "author": {
+        "name": "Anthropic (repackaged by Rughalt)"
+      },
+      "source": "./plugins/pr-review-toolkit",
+      "category": "productivity",
+      "version": "1.0.0"
+    }
+  ]
+}
